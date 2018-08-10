@@ -566,8 +566,14 @@ class BaseKeyValueStoreBackend(Backend):
     def get_key_for_task(self, task_id, key=''):
         """Get the cache key for a task by id."""
         key_t = self.key_t
+        keyprefix = self.task_keyprefix
+        logger.info("keyprefix %s'", keyprefix)
+        task_id = key_t(task_id)
+        logger.info("task_id %s'", task_id)
+        key = key_t(key)
+        logger.info("key %s'", key)
         return key_t('').join([
-            self.task_keyprefix, key_t(task_id), key_t(key),
+            keyprefix, task_id, key,
         ])
 
     def get_key_for_group(self, group_id, key=''):
